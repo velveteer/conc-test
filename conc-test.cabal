@@ -1,0 +1,53 @@
+cabal-version:      3.0
+name:               conc-test
+version:            0.1.0.0
+license:            BSD-3-Clause
+license-file:       LICENSE
+author:             Josh Miller
+maintainer:         miller.joshua@heb.com
+category:           Testing
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+
+common warnings
+    ghc-options: -Wall -Wno-unused-imports
+
+library
+    import:           warnings
+    exposed-modules:  Conc
+    other-modules:
+        Common
+      , RacyConc
+      , RacyIO
+      , TokenConc
+      , TokenSim
+    build-depends:
+        base ^>= 4.17.2.1
+      , concurrency
+      , io-classes
+      , time
+    hs-source-dirs:   src
+    default-language: GHC2021
+
+test-suite tests
+    import:           warnings
+    ghc-options:
+      -threaded
+      -with-rtsopts=-N
+    default-language: GHC2021
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   test
+    main-is:          Main.hs
+    build-depends:
+        base
+      , conc-test
+      , HUnit
+      , concurrency
+      , exceptions
+      , hspec
+      , hspec-contrib
+      , hunit-dejafu
+      , io-classes
+      , io-sim
+      , QuickCheck
+      , time
